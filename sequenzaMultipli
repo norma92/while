@@ -1,0 +1,126 @@
+/*
+ * Consegna:
+ * chiedi all'utente di inserire numeri
+ * la domanda si ripete fino a quando l'utente immette 0
+ * se i numeri inseriti rispettano questo ordine:
+ * multiplo di 3 -> multiplo di 5 
+ * (quindi devo confrontare i numeri 2 a 2)
+ * alla fine della sequenza viene stampato un messaggio affermativo
+ * altrimenti uno negativo
+ */
+public class SequenzaMultipli {
+
+	public static void main(String[] args) {
+		
+		//creo uno scanner per prendere i dati inseriti da tastiera
+		Scanner key = new Scanner(System.in);
+		
+		//stampo in console la domanda per l'utente, chiedo di inserire un carattere
+		System.out.println("Inserisci una sequenza :  ");
+		//dichiaro una variabile e la inizializzo con il valore immesso dall'utente
+		int numero = key.nextInt();
+		
+		/*
+		 * tu hai deciso di usare un while,
+		 * ma così facendo se ci fai caso ripeti la domanda anche all'interno del ciclo
+		 * avresti potuto usare anche un do - while (te lo metto sotto o ti mando un altro file, dopo vedo)
+		 */
+		
+		/*
+		 * dichiaro e inizializzo a 0 una variabile che mi serve per conoscere se il numero inserito è il primo o il secondo della coppia
+		 * all'interno della sequenza, così da poterlo associare alla giusta condizione da rispettare
+		 * (se è il primo della coppia, quindi in una posizione pari 0 - 2 - 4.. deve essere multiplo di 3,
+		 * mentre se è il secondo, quindi in una posizione dispari 1 - 3 - 5 .. deve essere multiplo di 5)
+		 */
+		int cont = 0;
+		/*
+		 * dichiaro una variabile booleana che inizializzo a true e che modificherò SOLO se nel corso della sequenza
+		 * si verifica una o più condizioni non rispettate per uno o più numeri della sequenza
+		 */
+		boolean isSequenzaok = true;
+		
+		//devo ciclare fino a quando il numero immesso dall'utente è 0, quindi ciclo mentre il numero è diverso da 0
+		while(numero != 0) {
+			
+			/*
+			 * qua verifico se il numero che sto considerando a questo giro del ciclo è in posizione pari
+			 * (quindi per non sballare la condizione deve essere multiplo di 3)
+			 * se è in posizione pari ed è multiplo di 3 il booleano NON deve cambiare,
+			 * perchè effettivamente la condizione richiesta dall'esercizio è verificata
+			 * QUINDI cambio il booleano SOLO se il numero in posizione pari NON è multiplo di 3
+			 */
+			//se è in posizione pari 
+			if(cont % 2 == 0){
+				//se NON è multiplo di 3
+				
+				//System.out.println("controllo posizione pari");
+				if(numero % 3 != 0) {
+					//System.out.println("controllo multiplo 3");
+					
+					/*
+					 * se sei finito in questo if stai prendendo in considerazione un numero in posizione pari nella sequenza,
+					 * quindi il primo inserito (perchè il cont parte da 0), o il terzo, o il quinto.. e così via
+					 * (quindi sei entrato nell'if a riga 55 e per essere entrato nell'if a riga 61 
+					 * il numero preso in esame non era multiplo di 3 
+					 * QUINDI la condizione non è più vera a prescindere da tutti gli altri numeri inseriti prima e/o dopo
+					 * se la condizione è stata corrotta, il valore del booleano diventa false
+					 */
+					isSequenzaok = false;
+				}
+					
+			}
+			/*
+			 * questo else serve per indicare i numeri che non occupano una posizione pari,
+			 * quindi saranno il secondo inserito, il quarto e così via
+			 * (sempre perchè il cont parte da 0), di conseguenza i numeri che entrano in questo else devono essere multipli di 5
+			 * per non corrompere la condizione
+			 */
+			else {
+			
+          //se NON è multiplo di 5
+				  //System.out.println("controllo posizione dispari");
+				  if(numero % 5 != 0) {
+					
+					//System.out.println("controllo multiplo 5");
+					
+					/* la condizione non è più valida a prescindere dal fatto che i numeri inseriti prima o dopo la rispettassero
+					 * quindi il valore del booleano diventa false
+					 */
+					isSequenzaok = false;
+				}
+			}
+			
+			/*
+			 * chiedo di inserire un nuovo numero dopo aver verificato il precedente e lo scrivo nel ciclo perché la domana si deve ripetere
+			 * a meno che il numero inserito non sia uno 0
+			 */
+			System.out.println("digita il numero");
+			//sovrascrivo numero con il nuovo valore immesso dall'utente
+			numero = key.nextInt();
+			
+			/* 
+			 * incremento cont di 1 per tenere traccia della posizione che occupa il valore inserito all'interno della sequenza
+			 * così da sapere se deve essere multiplo di 3 o di 5
+			 */
+			cont++;
+		}
+		
+		//se il valore del booleano non è variato significa che NON sono MAI entrata in una condizione che corrompesse la sequenza
+		if(isSequenzaok)
+			//quindi stampo ok
+			System.out.println("ok");
+		/* 
+		 * altrimenti, quindi se il valore booleano è diventato false, sono necessariamente entrata nell'if di riga 61 o 85 o entrambi
+		 * quindi ho incontrato almeno 1 numero che non rispettasse la condizione, perciò stampo no
+		 */	
+		else
+			System.out.println("no");
+		
+		
+		//chiudo lo scanner
+		key.close();
+		
+
+	}
+
+}
